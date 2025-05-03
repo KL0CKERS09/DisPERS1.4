@@ -60,7 +60,7 @@ export default function AdminPage() {
             <>
               <Card title="Total Users" value={stats.users ? stats.users.toString() : '0'} color="text-orange-500" />
               <Card title="Total Reports" value={stats.reports ? stats.reports.toString() : '0'} color="text-blue-500" />
-              <Card title="Critical Alerts" value={stats.alerts ? stats.alerts.toString() : '0'} color="text-red-500" />
+              <Card title="Alerts" value={stats.alerts ? stats.alerts.toString() : '0'} color="text-red-500" />
 
             </>
           )}

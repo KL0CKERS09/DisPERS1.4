@@ -76,13 +76,11 @@ export default function Profile() {
   };
 
   const handlePasswordChange = async () => {
-    // Check if new passwords match
     if (newPassword !== confirmPassword) {
       setPasswordChangeError("Passwords do not match.");
       return;
     }
 
-    // Validate new password strength
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
     if (!passwordRegex.test(newPassword)) {
       setPasswordChangeError(
@@ -121,7 +119,7 @@ export default function Profile() {
     if (!user?.firstName) errors.firstName = "First name is required.";
     if (!user?.lastName) errors.lastName = "Last name is required.";
     if (!user?.email || !/\S+@\S+\.\S+/.test(user.email)) errors.email = "Invalid email.";
-    if (!user?.phone || !/^\d{10}$/.test(user.phone)) errors.phone = "Phone number must be 10 digits.";
+    if (!user?.phone || !/^\d{11}$/.test(user.phone)) errors.phone = "Phone number must be 11 digits.";
     if (!user?.age || user.age < 18) errors.age = "Age must be at least 18.";
     setFormErrors(errors);
     return Object.keys(errors).length === 0;

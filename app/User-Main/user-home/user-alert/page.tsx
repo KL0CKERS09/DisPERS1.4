@@ -29,16 +29,20 @@ export default function ActiveAlertsSection() {
           "Content-Type": "application/json",
         },
       });
-
+  
       if (!res.ok) throw new Error("Failed to fetch alerts.");
+      
       const data = await res.json();
-      setAlerts(data.alerts || []);
+  
+      setAlerts((data.alerts || []).reverse());
+      
     } catch (error) {
       console.error("FETCH ERROR:", error);
     } finally {
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     fetchAlerts();

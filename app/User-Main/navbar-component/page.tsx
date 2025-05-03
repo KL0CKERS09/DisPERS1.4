@@ -88,7 +88,7 @@ export default function NavbarUser() {
             <Users size={20} />
             <span>About Us</span>
           </Link>
-          <button onClick={handleLogout} className="flex items-center space-x-3 text-gray-700 hover:text-red-600">
+          <button onClick={handleLogout} className="cursor-pointer flex items-center space-x-3 text-gray-700 hover:text-red-600">
             <LogOut size={20} />
             <span>Logout</span>
           </button>

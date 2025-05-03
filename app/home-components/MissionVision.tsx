@@ -12,9 +12,7 @@ const MissionVision = () => {
                     </div>
                     <h2 className="text-2xl font-bold text-orange-500 mb-4">Mission</h2>
                     <p className="text-gray-700">
-                        To empower Barangay Bagong Silangan with an efficient, responsive, and
-                        technology-driven alert system that delivers timely updates, critical
-                        information, and announcements to every resident.
+                    To provide a reliable, accessible, and real-time platform that empowers communities with accurate alerts, resources, and tools to prepare for, respond to, and recover from natural and man-made disasters.
                     </p>
                 </div>
 
@@ -26,9 +24,7 @@ const MissionVision = () => {
                     </div>
                     <h2 className="text-2xl font-bold text-orange-500 mb-4">Vision</h2>
                     <p className="text-gray-700">
-                        To empower Barangay Bagong Silangan with an efficient, responsive, and
-                        technology-driven alert system that delivers timely updates, critical
-                        information, and announcements to every resident.
+                    To become a trusted digital ally in disaster risk reduction and emergency management, fostering a resilient and informed society where safety and preparedness are accessible to all.
                     </p>
                 </div>
             </div>

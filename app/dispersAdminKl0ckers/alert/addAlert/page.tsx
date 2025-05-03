@@ -75,13 +75,20 @@ export default function AddAlertForm({ onClose, onSuccess }: Props) {
                         className="w-full border p-2 rounded"
                         placeholder="Location"
                     />
-                    <input
+                    <select
                         name="severity"
                         onChange={handleChange}
                         required
                         className="w-full border p-2 rounded"
-                        placeholder="Severity"
-                    />
+                        defaultValue=""
+                    >
+                        <option value="" disabled>Select Severity</option>
+                        <option value="Low">Low</option>
+                        <option value="Moderate">Moderate</option>
+                        <option value="High">High</option>
+                        <option value="Critical">Critical</option>
+                    </select>
+
                     <select
                         name="status"
                         value={newAlert.status}
@@ -95,31 +102,31 @@ export default function AddAlertForm({ onClose, onSuccess }: Props) {
 
                 {/* Right Column */}
                 <div className="w-[20em]  flex flex-col items-center justify-between gap-4">
-                    
+
                     <div className='w-full'>
                         {/* Hidden file input */}
-                    <input
-                        type="file"
-                        id="imageUpload"
-                        accept="image/*"
-                        onChange={handleImageUpload}
-                        className="hidden"
-                    />
+                        <input
+                            type="file"
+                            id="imageUpload"
+                            accept="image/*"
+                            onChange={handleImageUpload}
+                            className="hidden"
+                        />
 
-                    {/* Clickable image preview box */}
-                    <label htmlFor="imageUpload" className="w-full cursor-pointer">
-                        <div className="border-2 border-dashed border-gray-400 rounded-md w-full h-48 flex items-center justify-center overflow-hidden bg-gray-50 hover:bg-gray-100">
-                            {newAlert.img ? (
-                                <img
-                                    src={newAlert.img}
-                                    alt="Preview"
-                                    className="w-full h-full object-cover"
-                                />
-                            ) : (
-                                <span className="text-gray-500">Click to upload image</span>
-                            )}
-                        </div>
-                    </label>
+                        {/* Clickable image preview box */}
+                        <label htmlFor="imageUpload" className="w-full cursor-pointer">
+                            <div className="border-2 border-dashed border-gray-400 rounded-md w-full h-48 flex items-center justify-center overflow-hidden bg-gray-50 hover:bg-gray-100">
+                                {newAlert.img ? (
+                                    <img
+                                        src={newAlert.img}
+                                        alt="Preview"
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    <span className="text-gray-500">Click to upload image</span>
+                                )}
+                            </div>
+                        </label>
                     </div>
 
                     <button

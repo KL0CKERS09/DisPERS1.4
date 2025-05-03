@@ -34,26 +34,27 @@ export default function AnnouncementNotifier() {
       }
     };
 
-    const pollAlerts = async () => {
-      try {
-        const res = await axios.get("/api/alerts");
-        const alerts = res.data.announcements || [];
-        const latest = [...alerts].reverse()[0]; // Reverse before getting the latest
+const pollAlerts = async () => {
+  try {
+    const res = await axios.get("/api/alerts");
+    const alerts = res.data.alerts || []; // ✅ Correct key
+    const latest = [...alerts].reverse()[0]; // Get the most recent
 
-        if (latest && latest._id !== lastAlertId.current) {
-          lastAlertId.current = latest._id;
+    if (latest && latest._id !== lastAlertId.current) {
+      lastAlertId.current = latest._id;
 
-          if (Notification.permission === "granted") {
-            new Notification("🚨 New Alert", {
-              body: `${latest.title} - ${latest.description}`,
-              icon: "/favicon.ico",
-            });
-          }
-        }
-      } catch (error) {
-        console.error("Polling alerts error:", error);
+      if (Notification.permission === "granted") {
+        new Notification("🚨 New Alert", {
+          body: `${latest.title} - ${latest.description}`,
+          icon: "/favicon.ico",
+        });
       }
-    };
+    }
+  } catch (error) {
+    console.error("Polling alerts error:", error);
+  }
+};
+
 
     // Initial fetch
     pollAnnouncements();

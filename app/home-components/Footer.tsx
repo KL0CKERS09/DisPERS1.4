@@ -33,9 +33,9 @@ const Footer = () => {
                 <div>
                     <h3 className="font-semibold mb-4">Quick Links</h3>
                     <ul className="space-y-2 text-sm">
-                        <li><Link href="/">Home</Link></li>
-                        <li><Link href="/main/About">About Us</Link></li>
-                        <li><Link href="/main/Contact">Contact</Link></li>
+                        <li><Link href="/main">Home</Link></li>
+                        <li><Link href="/main/about">About Us</Link></li>
+                        <li><Link href="/main/contact">Contact</Link></li>
                     </ul>
                 </div>
                 <div>
@@ -50,13 +50,8 @@ const Footer = () => {
                     </ul>
                 </div>
             </div>
-            <div className="border-t border-orange-300 mt-10 pt-4 text-sm flex flex-col md:flex-row justify-between items-center text-gray-700">
+            <div className="border-t border-orange-300 mt-10 pt-4 text-sm flex flex-col md:flex-row justify-center items-center text-gray-700">
                 <p>© 2025 DisPERS. All rights reserved.</p>
-                <div className="flex gap-4 mt-2 md:mt-0">
-                    <a href="#">Terms of Service</a>
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Cookie Policy</a>
-                </div>
             </div>
         </footer>
     );

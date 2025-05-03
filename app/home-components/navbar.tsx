@@ -19,7 +19,7 @@ export default function Navbar() {
             height={70}
             width={70}
           />
-          <Link href="/" className="flex flex-col">
+          <Link href="/main" className="flex flex-col">
             <span className={`${roboto.variable} font-bold text-3xl tracking-[2px] text-[#FF5632] relative`}>
               DisPERS
             </span>
@@ -35,7 +35,7 @@ export default function Navbar() {
               <li key={label} className="relative group">
                 <span className="absolute left-0 bottom-[-10px] h-[5px] w-0 bg-[#FF5632] transition-all duration-400 ease-in-out group-hover:w-full"></span>
                 <Link
-                  href={index === 0 ? "/main/" : `../${label.toLowerCase()}`}
+                  href={index === 0 ? "/" : `/main/${label.toLowerCase()}`}
                   className="text-xl px-7 py-2 text-gray-900 font-semibold hover:bg-orange-100 group-hover:text-[#d85700]"
                 >
                   {label}
