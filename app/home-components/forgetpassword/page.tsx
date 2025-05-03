@@ -116,7 +116,7 @@ export default function ForgotPassword() {
         {step === 2 && (
           <>
             <div className="relative flex items-center justify-center mb-6">
-              <Link href="../../Login" className="absolute left-0 text-blue-600 hover:underline flex items-center gap-2">
+              <Link href="/main/Login" className="absolute left-0 text-blue-600 hover:underline flex items-center gap-2">
                 <FaArrowLeft className="text-lg" />
               </Link>
               <h2 className="text-2xl font-bold tracking-wider">RESET PASSWORD</h2>

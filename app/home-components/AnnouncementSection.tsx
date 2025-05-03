@@ -77,14 +77,7 @@ export default function AdminAnnouncementPage() {
                                 <p className="text-gray-600 mt-1">{a.description}</p>
                                 <p className="text-sm text-gray-400 mt-1 italic">{a.location}</p>
                             </div>
-                            <div className=" absolute bottom-2 right-2 flex gap-2 ">
-                                <button
-                                    onClick={() => handleDelete(a._id)}
-                                    className=" bg-red-600 text-white text-sm px-3 py-1 rounded hover:bg-red-700"
-                                >
-                                    Delete
-                                </button>
-                            </div>
+                            
                         </div>
                     ))
                 ) : (

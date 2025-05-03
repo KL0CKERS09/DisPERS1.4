@@ -26,17 +26,17 @@
         {
             "name": "Rafael B Dula",
             "role": "Project Manager",
-            "image": ""
+            "image": "rafael-dula.png"
         },
         {
             "name": "Ed Charls Ruiz",
             "role": "Project Coordinator",
-            "image": ""
+            "image": "charls-ruiz.jpg"
         },
         {
             "name": "King Airic Solomon",
             "role": "System Analyst",
-            "image": ""
+            "image": "king-solomon.jpg"
         },
         {
             "name": "Fredo Bendal",
@@ -46,7 +46,7 @@
         {
             "name": "Zaiden A. Aguirre",
             "role": "Quality Assurance",
-            "image": ""
+            "image": "zaiden-aguirre.jpg"
         },
         {
             "name": "Ivan Salvador",
@@ -56,12 +56,12 @@
         {
             "name": "Muhammad Hamza Garcia",
             "role": "UI Designer",
-            "image": ""
+            "image": "hamza-garcia.jpg"
         },
         {
             "name": "John Patrick Darius Mahumzar",
             "role": "Database Manager",
-            "image": ""
+            "image": "patrick-mahumzar.png"
         }
     ]
 }

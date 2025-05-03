@@ -3,7 +3,7 @@
 import React from 'react';
 import NavbarUser from './navbar-component/page';
 import './globals.css';
-import Footer from '@/app/home-components/Footer';
+import Footer from './footer/page';
 import About from './about/page';
 import AnnouncementNotifier from '@/app/home-components/AlertNotificationWatcher';
 

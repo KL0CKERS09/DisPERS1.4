@@ -45,9 +45,9 @@ export default function NavbarUser() {
             />
             <Link href="/User-Main" className="flex flex-col">
               <span className={`text-[#FF5632] text-3xl tracking-[2px] font-bold relative z-[999] ${roboto.variable}`}>
-                SAFENET
+                DisPERS
               </span>
-              <span className="text-white text-sm">BARANGGAY BAGONG SILANGAN ALERT SYSTEM</span>
+              <span className="text-white text-sm">BARANGAY BAGONG SILANGAN ALERT SYSTEM</span>
             </Link>
           </div>
 

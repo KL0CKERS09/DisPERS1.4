@@ -91,7 +91,7 @@ export default function About() {
             <div key={i} className="text-center space-y-3">
               <div className="relative w-[150px] h-[150px] mx-auto">
                 <Image
-                  src={member.image}
+                  src={`/team-profile/${member.image}`}
                   alt={member.name}
                   fill
                   className="rounded-full object-cover shadow"

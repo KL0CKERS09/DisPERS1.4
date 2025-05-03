@@ -91,7 +91,7 @@ export default function UserSubmitReport() {
         setSeverity(""); // Reset severity
         setImage(null);
         setPreview(null);
-        router.push("/success");
+        router.push("/User-Main/user-report-history");
       } else {
         const result = await response.json();
         alert(result?.message || "Failed to submit report.");

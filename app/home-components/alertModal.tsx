@@ -57,7 +57,7 @@ export default function AlertModal({ isOpen, onClose, alert }: AlertModalProps) 
 
         <div className="text-xs text-gray-500 mt-4 flex justify-between">
           <span>{alert.createdAt}</span>
-          <a href={`/`} className="text-blue-400 hover:underline">Emergency Contact: 911</a>
+          <a href={`tel:911`} className="text-blue-400 hover:underline">Emergency Contact: 911</a>
         </div>
       </div>
     </div>
