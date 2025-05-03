@@ -35,7 +35,7 @@ export default function Navbar() {
               <li key={label} className="relative group">
                 <span className="absolute left-0 bottom-[-10px] h-[5px] w-0 bg-[#FF5632] transition-all duration-400 ease-in-out group-hover:w-full"></span>
                 <Link
-                  href={index === 0 ? "/" : `../${label.toLowerCase()}`}
+                  href={index === 0 ? "/main/" : `../${label.toLowerCase()}`}
                   className="text-xl px-7 py-2 text-gray-900 font-semibold hover:bg-orange-100 group-hover:text-[#d85700]"
                 >
                   {label}
@@ -44,7 +44,7 @@ export default function Navbar() {
             ))}
             <li>
               <Link
-                href="../Login"
+                href="/main/Login"
                 className="italic font-bold px-13 py-4 rounded-2xl text-xl text-white bg-[#4E709D] hover:bg-blue-500 hover:text-gray-200"
               >
                 Log In

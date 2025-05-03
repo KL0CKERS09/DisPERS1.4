@@ -19,7 +19,7 @@ export default function NavbarUser() {
 
   const handleLogout = async () => {
     await fetch('/api/logout');
-    router.push('/Login');
+    router.push('/main/Login');
   };
 
   return (
