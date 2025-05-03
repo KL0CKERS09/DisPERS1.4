@@ -1,0 +1,33 @@
+[
+    {
+      "title": "DisPERS",
+      "text": "DisPERS is your barangay's trusted platform for real-time alerts and secure reporting. Whether you’re witnessing an emergency or simply want to stay informed, DisPERS ensures you’re connected. Report incidents anonymously or through your account, and help make the community safer. With just a few taps, you can raise awareness, receive verified announcements, and help authorities respond faster. It’s designed for accessibility, speed, and trust — empowering citizens to protect and uplift their neighborhood together.",
+      "showButton": true
+    },
+    {
+      "title": "1. Report Anonymously",
+      "text": "You don’t need an account to make a difference. DisPERS allows anyone to submit reports anonymously, giving you a safe space to speak up. Whether it’s a safety hazard, suspicious activity, or local issue, your voice matters. Reports are reviewed promptly, and your identity is never revealed. Anonymous reporting is simple, fast, and secure—perfect for those who want to contribute without fear of exposure. Help us keep the community informed without compromising your privacy.",
+      "showButton": false
+    },
+    {
+      "title": "2. Get Verified. Get Trusted.",
+      "text": "Create an account and gain access to our trust badge system. Verified users who submit accurate reports consistently are rewarded with a trust badge, allowing their future reports to bypass manual verification. This helps speed up alert processing and builds credibility within the community. Trusted voices mean faster action and stronger connections. Show your commitment to safety and become a reliable source of information for both barangay officials and your fellow citizens.",
+      "showButton": false
+    },
+    {
+      "title": "3. Real-time Alerts",
+      "text": "Stay ahead of emergencies with real-time alerts sent directly to your device. Whether it’s a natural disaster, fire, criminal activity, or missing person, DisPERS makes sure you know what’s happening as it unfolds. Users with accounts receive instant push notifications, SMS, or in-app messages, ensuring that no warning goes unnoticed. These alerts are verified and community-sourced for reliability. In a crisis, seconds matter — DisPERS ensures you act fast and stay safe.",
+      "showButton": false
+    },
+    {
+      "title": "4. Community Announcements",
+      "text": "From scheduled maintenance to community events, DisPERS is your hub for official barangay announcements. Never miss out on important dates, power outages, vaccination drives, or public hearings again. Notifications are sent based on your preferences, keeping you connected to local updates that matter. It’s your one-stop resource for staying engaged and informed, whether you’re at home, at work, or on the go. Your barangay, your updates — all in one place.",
+      "showButton": false
+    },
+    {
+      "title": "5. Your Voice, Your Power",
+      "text": "Every report you submit strengthens your community’s safety and awareness. Whether it’s a small concern or a major issue, your contribution helps prevent harm and protect lives. DisPERS empowers you to take action through easy reporting tools, and your voice is heard by the right people at the right time. When citizens speak up, change happens faster. It’s not just reporting—it’s civic engagement. Take charge. Be part of the solution. Your voice truly has power.",
+      "showButton": false
+    }
+  ]
+  

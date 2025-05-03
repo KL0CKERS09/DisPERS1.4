@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+
+
+hr {
+    width: 80% ;
+    height: 1px;
+    margin: 5em auto;
+}

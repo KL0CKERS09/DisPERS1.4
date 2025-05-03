@@ -1,0 +1,220 @@
+$blue :#0D6EFD;
+$font-orange : #FF7D61;
+$font-roboto : 'Roboto',
+sans-serif;
+$faint-blue: #e6f0ff;
+$deep-blue: #003366;
+$link-color: #0D6EFD;
+$light-gray: #f9f9f9;
+
+$primary: #ff5b2e;
+$background: #f9f9f9;
+$icon-bg: rgba(255, 91, 46, 0.1);
+$footer-bg: #ff5b2e;
+$footer-text: #1a1a1a;
+$footer-light: #fefefe;
+
+.firstContainer {
+    display: flex;
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5em;
+    position: relative;
+
+    .slide-container {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        box-shadow: inset 5px 5px 20px (#ff0000);
+        position: relative;
+        margin: 0 auto;
+        background-color: #fff;
+
+        .slide-holder {
+            width: fit-content;
+            height: 100%;
+            display: flex;
+            transition: transform 2s ease-in-out;
+
+            .slides {
+                width: 100vw;
+                position: relative;
+
+                .background {
+                    width: 100%;
+                    height: 100%;
+                    background-color: #1a1a1a;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        filter: blur(5px);
+                        opacity: .7;
+                    }
+                }
+
+                .main-container-absolute {
+                    position: absolute;
+                    width: 80%;
+                    top: 50%;
+                    left: 10%;
+                    transform: translate(0%, -50%);
+                    display: flex;
+                    flex-direction: column;
+
+                    .headline-title {
+                        padding: 1em 0em;
+                        h1 {
+                            font-family: 'Roboto', sans-serif;
+                            color: $font-orange;
+                            font-size: 5vw;
+                            letter-spacing: 2px;
+                            position: relative;
+                            font-weight: 900;
+                            z-index: 10;
+                            text-transform: uppercase;
+                            -webkit-text-stroke: 1px #333;
+                            line-height: 10vh;
+                            // Glow that feels like firelight
+                            
+                        }
+                    }
+
+                    .headline-subtext {
+                        padding-bottom: 2em;
+
+                        p {
+                            font-size: 1.1vw;
+                            color: #fff;
+                        }
+                    }
+
+                    .registration-btn {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 1em;
+                        .reg-button {
+                            background-color: #4E709D;
+                            font-family: 'Roboto', sans-serif;
+                            font-size: 15px;
+                            color: #fff;
+                            max-width: fit-content;
+                            padding: .75em 2em;
+                            border: none;
+                            border-radius: 30px;
+                            cursor: pointer;
+                            transition: 250ms;
+                            cursor: pointer;
+                            box-shadow: 0px 0px 10px #a1bfff;
+                            display: flex;
+                            align-items: center;
+                            gap: 1em;
+                        }
+                        .button {
+                            background-color: #D7502F;
+                            font-family: 'Roboto', sans-serif;
+                            font-size: 15px;
+                            color: #fff;
+                            max-width: fit-content;
+                            padding: .75em 2em;
+                            border: none;
+                            border-radius: 30px;
+                            cursor: pointer;
+                            transition: 250ms;
+                            box-shadow: 0px 0px 10px #ffaa6d;
+                            display: flex;
+                            align-items: center;
+                            gap: 1em;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.firstContainer::before {
+    content: '';
+    width: 80%;
+    height: 5px;
+    background-color: #333;
+    position: absolute;
+    bottom: 0;
+}
+
+.navigationButtons {
+    position: absolute;
+    top: 50%;
+    transform: translate(0%, -50%);
+    bottom: 20px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    z-index: 10;
+}
+.navigationButtons::after {
+    content: "";
+    position: absolute;
+    left: -20;
+    width: 10%;
+    height: 100%;
+    background: linear-gradient(to left, transparent, #000000ca );
+    box-shadow: none;
+    transform: scale(1.1);
+    filter: blur(20px);
+    z-index: 0;
+    opacity: .8;
+}
+
+.navigationButtons::before {
+    content: "";
+    position: absolute;
+    right: -20;
+    width: 10%;
+    height: 100%;
+    background: linear-gradient(to right, #ffffff00, #000000ca);
+    filter: blur(20px);
+    transform: scale(1.1);
+    opacity: .8;
+}
+
+.leftNavBtn {
+    position: absolute;
+    color: white;
+    border: none;
+    padding: 0.5rem .5rem;
+    margin-left: .5em;
+    font-size: 1.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transform: scale(.8) translate(0%, -50%);
+    background-color: #ffffff46;
+    z-index: 10;
+    transition: 250ms;
+    box-shadow: 0px 0px 10px #333;
+}
+.leftNavBtn:hover {
+    background-color: #fff;
+}
+.rightNavBtn {
+    position: absolute;
+    color: white;
+    border: none;
+    padding: 0.5rem .5rem;
+    margin-right: .5em;
+    font-size: 1.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transform: scale(.8) translate(0%, -50%);
+    z-index: 10;
+    background-color: #ffffff46;
+    transition: 250ms;
+    box-shadow: 0px 0px 10px #333;
+}
+.rightNavBtn:hover {
+    background-color: #fff;
+}

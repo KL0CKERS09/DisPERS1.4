@@ -1,0 +1,11 @@
+[
+    {
+      "id": 1,
+      "title1": "ABOUT",
+      "title2": " DisPERS",
+      "description": "DisPERS is the official disaster and incident reporting system of Barangay Bagong Silangan. It empowers residents to report emergencies, hazards, and community issues in real-time, enabling faster response and improved coordination during crises.",
+      "image": "/about-image.png",
+      "link": "/about/DisPERS"
+    }
+  ]
+  

@@ -1,0 +1,301 @@
+Front End : 
+'use client';
+
+import React, { useEffect, useState } from 'react';
+
+interface UserProfile {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  age: number;
+  phone: string;
+  email: string;
+  username: string;
+  profilePicture?: string; // base64
+}
+
+const Profile: React.FC = () => {
+  const [user, setUser] = useState<UserProfile | null>(null);
+  const [formData, setFormData] = useState<Partial<UserProfile>>({});
+  const [editMode, setEditMode] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Read auth token from cookie
+  const getTokenFromCookie = () => {
+    if (typeof document === 'undefined') return null;
+    const token = document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('authToken='))
+      ?.split('=')[1];
+    return token || null;
+  };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = getTokenFromCookie();
+      if (!token) {
+        setError('Missing auth token');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/updateprofile', {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!res.ok) {
+          const errText = await res.text();
+          throw new Error(`Failed to fetch user: ${errText}`);
+        }
+
+        const data = await res.json();
+        setUser(data);
+        setFormData(data);
+      } catch (err: any) {
+        setError(err.message || 'Failed to load user profile');
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setFormData({ ...formData, profilePicture: reader.result as string });
+    };
+    reader.readAsDataURL(file); // encodes to base64
+  };
+
+  const handleSave = async () => {
+    const token = getTokenFromCookie();
+    if (!token) {
+      setError('Missing auth token');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch('/api/updateprofile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) {
+        const errText = await res.text();
+        throw new Error(`Failed to update profile: ${errText}`);
+      }
+
+      const updated = await res.json();
+      setUser(updated);
+      setFormData(updated);
+      setEditMode(false);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (error) return <div className="text-red-500 p-4">⚠️ {error}</div>;
+  if (!user) return <div className="p-4">Loading profile...</div>;
+
+  return (
+    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+      <div className="flex flex-col md:flex-row items-center md:justify-between mb-6">
+        <div className="relative">
+          <img
+            src={formData.profilePicture || '/default-profile.png'}
+            alt="Profile"
+            className="w-36 h-36 object-cover rounded-full border-4 border-gray-300"
+          />
+          {editMode && (
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="absolute inset-0 opacity-0 cursor-pointer"
+            />
+          )}
+        </div>
+        {!editMode ? (
+          <button onClick={() => setEditMode(true)} className="mt-4 md:mt-0 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+            Edit Profile
+          </button>
+        ) : (
+          <div className="flex gap-4 mt-4 md:mt-0">
+            <button onClick={handleSave} disabled={loading} className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50">
+              {loading ? 'Saving...' : 'Save'}
+            </button>
+            <button onClick={() => setEditMode(false)} className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400">
+              Cancel
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <InputField label="First Name" name="firstName" value={formData.firstName} onChange={handleChange} disabled={!editMode} />
+        <InputField label="Last Name" name="lastName" value={formData.lastName} onChange={handleChange} disabled={!editMode} />
+        <InputField label="Age" name="age" type="number" value={formData.age?.toString()} onChange={handleChange} disabled={!editMode} />
+        <InputField label="Phone" name="phone" value={formData.phone} onChange={handleChange} disabled={!editMode} />
+        <InputField label="Email" name="email" type="email" value={formData.email} onChange={handleChange} disabled={!editMode} />
+      </div>
+    </div>
+  );
+};
+
+// Reusable field component
+const InputField = ({
+  label,
+  name,
+  value,
+  onChange,
+  type = 'text',
+  disabled,
+}: {
+  label: string;
+  name: string;
+  value?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type?: string;
+  disabled?: boolean;
+}) => (
+  <div>
+    <label className="block mb-2 font-semibold text-gray-700">{label}</label>
+    <input
+      name={name}
+      type={type}
+      value={value || ''}
+      onChange={onChange}
+      disabled={disabled}
+      className="w-full px-3 py-2 border border-gray-300 rounded disabled:bg-gray-100"
+    />
+  </div>
+);
+
+export default Profile;
+
+
+
+
+
+
+
+api/updateprofile/route.to
+
+import { cookies } from 'next/headers';
+import { connectToDB } from '@/libs/mongodb';
+import jwt from 'jsonwebtoken';
+import { ObjectId } from 'mongodb';
+import { NextRequest, NextResponse } from 'next/server';
+
+const JWT_SECRET = process.env.JWT_SECRET!;
+
+// GET profile of the authenticated user
+export async function GET() {
+  const token = cookies().get('authToken')?.value; // No need to await cookies()
+
+  if (!token) {
+    return NextResponse.json({ message: 'Unauthorized - No token' }, { status: 401 });
+  }
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
+    const { db } = await connectToDB();
+    const user = await db.collection('users').findOne(
+      { _id: new ObjectId(decoded.userId) },
+      { projection: { password: 0 } } // Don't return password
+    );
+
+    if (!user) {
+      return NextResponse.json({ message: 'User not found' }, { status: 404 });
+    }
+
+    return NextResponse.json(user);
+  } catch (error) {
+    console.error('JWT Error:', error);
+    return NextResponse.json({ message: 'Invalid token' }, { status: 403 });
+  }
+}
+
+// PUT - update user profile
+export async function PUT(req: NextRequest) {
+  const token = cookies().get('authToken')?.value; // No need to await cookies()
+
+  if (!token) {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  }
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
+    const body = await req.json();
+
+    const { db } = await connectToDB();
+    await db.collection('users').updateOne(
+      { _id: new ObjectId(decoded.userId) },
+      {
+        $set: {
+          firstName: body.firstName,
+          lastName: body.lastName,
+          age: body.age,
+          phone: body.phone,
+          email: body.email,
+          profilePicture: body.profilePicture, // Base64 string
+        },
+      }
+    );
+
+    const updatedUser = await db.collection('users').findOne(
+      { _id: new ObjectId(decoded.userId) },
+      { projection: { password: 0 } }
+    );
+
+    return NextResponse.json(updatedUser);
+  } catch (err) {
+    console.error('PUT Error:', err);
+    return NextResponse.json({ message: 'Failed to update profile' }, { status: 500 });
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

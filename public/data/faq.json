@@ -1,0 +1,38 @@
+[
+    {
+        "question": "What is the purpose of this alert system?",
+        "answer": "This system helps keep residents informed about local emergencies like fires, floods, and accidents through real-time online alerts posted by the barangay."
+    },
+    {
+        "question": "Is registration required to use the alert system?",
+        "answer": "No, registration is optional. However, creating an account gives you access to extra features like: ✅ Trust Badge ✅ Real-time alerts ✅ Instant notifications when the barangay posts updates ✅ Ability to track your submitted reports"
+    },
+    {
+        "question": "Will I receive SMS alerts from the system?",
+        "answer": "No. This system does not send SMS notifications. All alerts will be posted and accessible on the official website."
+    },
+    {
+        "question": "How do I know if there's a new emergency alert?",
+        "answer": "If you're a registered user, you’ll receive real-time website notifications when new alerts are posted. Unregistered users can still view alerts by visiting the site manually."
+    },
+    {
+        "question": "Can I report an emergency or incident using the system?",
+        "answer": "Yes. You can still view emergency alerts and submit anonymous reports, but some features (like real-time notifications or report tracking) are only available to registered users."
+    },
+    {
+        "question": "What types of emergencies will be posted on the system?",
+        "answer": "The barangay will post updates about: Medical emergencies,Fire incidents, Floods or landslides, Road accidents, Crime-related warnings, Typhoon and weather updates."
+    },
+    {
+        "question": "Is the system mobile-friendly?",
+        "answer": "Yes! The system is designed to be responsive and accessible on mobile devices."
+    },
+    {
+        "question": "Is my information safe if I register?",
+        "answer": "Absolutely. All registered data is secured with encryption and protected by strict privacy policies. Only authorized personnel can access the system."
+    },
+    {
+        "question": "Can I still use the system without registering?",
+        "answer": "Yes. You can browse alerts and submit anonymous reports, but registered users get enhanced features like notifications and report tracking."
+    }
+]
