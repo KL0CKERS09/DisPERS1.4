@@ -7,7 +7,8 @@ import React, { useEffect, useState } from 'react';
 
 interface AboutItem {
     id: number;
-    title: string;
+    title1: string;
+    title2: string;
     description: string;
     image: string;
     link: string;
@@ -39,13 +40,16 @@ const About: React.FC = () => {
                                 <Image
                                     className="w-[80%] mx-auto rounded-3xl shadow-[0_0_20px_#a6a6a6]  "
                                     src={item.image}
-                                    alt={item.title}
+                                    alt={"basta pogi yan mga yan"}
                                     width={500}
                                     height={300}
                                 />
                             </div>
                             <div className="guide-description-holder flex flex-col justify-center px-4">
-                                <h1 className="text-3xl font-semibold mb-4">{item.title}</h1>
+                                <div className='flex gap-5'>
+                                <h1 className="text-3xl font-bold mb-4">{item.title1}</h1>
+                                <h1 className="text-4xl font-bold mb-4 text-[#FF5632]">{item.title2}</h1>
+                                </div>
                                 <p className="text-gray-700 mb-8">{item.description}</p>
                                 <div className="flex justify-end">
                                     <Link
