@@ -50,7 +50,7 @@ const About: React.FC = () => {
                                 <div className="flex justify-end">
                                     <Link
                                         className="py-3 px-6 bg-[#4E709D] rounded-3xl text-white hover:shadow-[0_0_10px_rgba(0,0,255,0.5)] transition-shadow"
-                                        href={"../About"}
+                                        href={"/main/about"}
                                     >
                                         See More...
                                     </Link>
