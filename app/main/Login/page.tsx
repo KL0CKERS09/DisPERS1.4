@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaUser, FaLock } from "react-icons/fa";
 import style from "@/styles/login.module.scss";
@@ -41,6 +41,15 @@ export default function LogIn() {
       setTimeout(() => setShowModal(false), 1500);
     }
   };
+
+  useEffect(() => {
+    const search = window.location.search;
+    const params = new URLSearchParams(search);
+    if (params.get("register") === "true") {
+      setShowRegister(true);
+    }
+  }, []);
+  
 
   return (
     <>

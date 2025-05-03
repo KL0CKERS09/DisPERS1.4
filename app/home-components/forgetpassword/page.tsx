@@ -3,7 +3,6 @@ import { useState } from "react";
 import { FaKey, FaLock, FaUser, FaArrowLeft } from "react-icons/fa";
 import style from "@/styles/login.module.scss";
 import Link from "next/link";
-import Image from "next/image";
 
 export default function ForgotPassword() {
   const [step, setStep] = useState(1);
@@ -59,7 +58,7 @@ export default function ForgotPassword() {
         {step === 1 && (
           <>
             <div className="relative flex items-center justify-center mb-6">
-              <Link href="../../Login" className="absolute left-0 text-blue-600 hover:underline flex items-center gap-2">
+              <Link href="/main/Login" className="absolute left-0 text-blue-600 hover:underline flex items-center gap-2">
                 <FaArrowLeft className="text-lg" />
               </Link>
               <h2 className="text-2xl font-bold tracking-wider">FIND ACCOUNT</h2>
