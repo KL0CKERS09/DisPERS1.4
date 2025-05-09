@@ -15,21 +15,21 @@ export default function ContactPage() {
             <div className="flex items-center space-x-4">
               <FaFacebookF className="text-blue-600 text-xl" />
               <a href="https://facebook.com/yourpage" target="_blank" rel="noopener noreferrer" className="text-lg hover:underline">
-                facebook.com/yourpage
+                facebook.com/dispersbagongsilangan
               </a>
             </div>
 
             <div className="flex items-center space-x-4">
               <FaInstagram className="text-pink-500 text-xl" />
               <a href="https://instagram.com/yourpage" target="_blank" rel="noopener noreferrer" className="text-lg hover:underline">
-                instagram.com/yourpage
+                instagram.com/dispersbagongsilangan
               </a>
             </div>
 
             <div className="flex items-center space-x-4">
               <FaTwitter className="text-black text-xl" />
               <a href="https://x.com/yourpage" target="_blank" rel="noopener noreferrer" className="text-lg hover:underline">
-                x.com/yourpage
+                x.com/dispersbagongsilangan
               </a>
             </div>
 
@@ -46,8 +46,8 @@ export default function ContactPage() {
 
             <div className="flex items-center space-x-4">
               <FaEnvelope className="text-red-500 text-xl" />
-              <a href="mailto:info@example.com" className="text-lg hover:underline">
-                info@example.com
+              <a href="barangaysilangandispers@gmail.com" className="text-lg hover:underline">
+              barangaysilangandispers@gmail.com
               </a>
             </div>
           </div>

@@ -25,7 +25,7 @@
     },
     {
         "question": "Is the system mobile-friendly?",
-        "answer": "Yes! The system is designed to be responsive and accessible on mobile devices."
+        "answer": "No! As of now the system is not designed to be responsive to mobile devices."
     },
     {
         "question": "Is my information safe if I register?",

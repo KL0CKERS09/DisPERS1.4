@@ -67,7 +67,7 @@ export default function AdminAnnouncementPage() {
             </div>
 
             {/* Announcement List */}
-            <div className="grid grid-rows-10 gap-4">
+            <div className="grid gap-4">
                 {currentAnnouncements.length > 0 ? (
                     currentAnnouncements.map((a: Announcement) => (
                         <div

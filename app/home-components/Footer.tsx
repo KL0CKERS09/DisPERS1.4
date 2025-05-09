@@ -45,7 +45,7 @@ const Footer = () => {
                             <FaMapMarkerAlt /> M4X6+46F, Bonifacio, Brgy, Quezon City, Metro Manila
                         </li>
                         <li className="flex items-center gap-2">
-                            <FaEnvelope /> DisPERS100484@gmail.com
+                            <FaEnvelope /> barangaysilangandispers@gmail.com
                         </li>
                     </ul>
                 </div>

@@ -26,11 +26,12 @@ type Status = {
     isError: boolean;
 };
 
-export default function AdminAnnouncementPage() {
+export default function ManageAnnouncement() {
     const [showModal, setShowModal] = useState(false);
     const [viewModalOpen, setViewModalOpen] = useState(false);
     const [selectedAnnouncement, setSelectedAnnouncement] = useState<Announcement | null>(null);
     const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+    const [searchTerm, setSearchTerm] = useState("");
     const [form, setForm] = useState<FormData>({
         title: "",
         description: "",
@@ -90,7 +91,6 @@ export default function AdminAnnouncementPage() {
                 setStatus({ message: "File too large (max 2MB).", isError: true });
                 return;
             }
-
             const reader = new FileReader();
             reader.onloadend = () => {
                 setForm((prev) => ({ ...prev, img: reader.result as string }));
@@ -150,25 +150,42 @@ export default function AdminAnnouncementPage() {
     };
 
     const indexOfLast = currentPage * announcementsPerPage;
-    const currentAnnouncements = announcements.slice(indexOfLast - announcementsPerPage, indexOfLast);
+    const filteredAnnouncements = announcements.filter((a) =>
+        a.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    const currentAnnouncements = filteredAnnouncements.slice(
+        indexOfLast - announcementsPerPage,
+        indexOfLast
+    );
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
     return (
         <div className="p-6 max-w-5xl mx-auto">
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
                 <h1 className="text-3xl font-bold text-gray-800">Manage Announcements</h1>
-                <button
-                    onClick={() => {
-                        setSelectedAnnouncement(null);
-                        setShowModal(true);
-                    }}
-                    className="bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700"
-                >
-                    + Create Announcement
-                </button>
+                <div className="flex gap-2 items-center">
+                    <input
+                        type="text"
+                        placeholder="Search announcements..."
+                        value={searchTerm}
+                        onChange={(e) => {
+                            setSearchTerm(e.target.value);
+                            setCurrentPage(1);
+                        }}
+                        className="border rounded-md px-4 py-2"
+                    />
+                    <button
+                        onClick={() => {
+                            setSelectedAnnouncement(null);
+                            setShowModal(true);
+                        }}
+                        className="bg-green-600 text-white px-6 py-2 rounded-lg shadow hover:bg-green-700"
+                    >
+                        + Create Announcement
+                    </button>
+                </div>
             </div>
 
-            {/* Announcements */}
             <div className="grid gap-4">
                 {currentAnnouncements.length > 0 ? (
                     currentAnnouncements.map((a) => (
@@ -220,19 +237,23 @@ export default function AdminAnnouncementPage() {
                 )}
             </div>
 
-            {/* Pagination */}
             <div className="flex justify-center mt-4">
-                {Array.from({ length: Math.ceil(announcements.length / announcementsPerPage) }, (_, i) => (
-                    <button
-                        key={i}
-                        onClick={() => paginate(i + 1)}
-                        className="px-3 py-1 mx-1 rounded bg-blue-600 text-white hover:bg-blue-700"
-                    >
-                        {i + 1}
-                    </button>
-                ))}
+                {Array.from(
+                    { length: Math.ceil(filteredAnnouncements.length / announcementsPerPage) },
+                    (_, i) => (
+                        <button
+                            key={i}
+                            onClick={() => paginate(i + 1)}
+                            className={`px-3 py-1 mx-1 rounded ${currentPage === i + 1 ? "bg-blue-800" : "bg-blue-600"
+                                } text-white hover:bg-blue-700`}
+                        >
+                            {i + 1}
+                        </button>
+                    )
+                )}
             </div>
 
+            {/* Create/Update Modal */}
             {/* Modal for Create/Update */}
             {showModal && (
                 <div className="fixed inset-0 z-50 bg-black/30 flex items-center justify-center">
@@ -252,6 +273,7 @@ export default function AdminAnnouncementPage() {
                                     {status.message}
                                 </div>
                             )}
+
                             <div className="flex flex-col justify-around min-w-[25em] h-[100%]">
                                 <input
                                     name="title"
@@ -315,8 +337,8 @@ export default function AdminAnnouncementPage() {
                                     {isLoading
                                         ? "Submitting..."
                                         : selectedAnnouncement
-                                        ? "Update Announcement"
-                                        : "Post Announcement"}
+                                            ? "Update Announcement"
+                                            : "Post Announcement"}
                                 </button>
                             </div>
                         </form>
