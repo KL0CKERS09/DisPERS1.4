@@ -10,7 +10,6 @@ export async function POST(req: NextRequest) {
 
     const users = Array.isArray(data) ? data : [data];
 
-    // Check for existing email or username
     for (const user of users) {
       const existingEmail = await User.findOne({ email: user.email });
       const existingUsername = await User.findOne({ username: user.username });
@@ -24,7 +23,6 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // If all good, hash passwords and insert
     const usersToInsert = await Promise.all(
       users.map(async (user) => {
         const hashedPassword = await bcrypt.hash(user.password, 10);

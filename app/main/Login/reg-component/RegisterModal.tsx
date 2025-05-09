@@ -39,7 +39,6 @@ export default function RegisterModal({ onClose }: { onClose: () => void }) {
     }
 
     try {
-      // Reset previous error messages
       setError({
         email: "",
         phone: "",
@@ -50,7 +49,6 @@ export default function RegisterModal({ onClose }: { onClose: () => void }) {
       alert("Registered successfully!");
       onClose();
     } catch (err: any) {
-      // Handle errors, assuming the API returns these error types
       if (err.response) {
         const { email, phone, username } = err.response.data;
         setError({
@@ -109,7 +107,6 @@ export default function RegisterModal({ onClose }: { onClose: () => void }) {
             onChange={handleChange}
             className="w-full p-2 rounded-md border"
           />
-          {/* Display error for phone */}
           {error.phone && <div className="text-red-500 text-sm mb-2">{error.phone}</div>}
           <input
             name="phone"
@@ -118,7 +115,6 @@ export default function RegisterModal({ onClose }: { onClose: () => void }) {
             onChange={handleChange}
             className="w-full p-2 rounded-md border"
           />
-          {/* Display error for address */}
           {error.address && <div className="text-red-500 text-sm mb-2">{error.address}</div>}
           <input
             name="address"
@@ -127,7 +123,6 @@ export default function RegisterModal({ onClose }: { onClose: () => void }) {
             onChange={handleChange}
             className="w-full p-2 rounded-md border"
           />
-          {/* Display error for email */}
           {error.email && <div className="text-red-500 text-sm mb-2">{error.email}</div>}
           <input
             name="email"
@@ -137,7 +132,6 @@ export default function RegisterModal({ onClose }: { onClose: () => void }) {
             onChange={handleChange}
             className="w-full p-2 rounded-md border"
           />
-          {/* Display error for username */}
           {error.username && <div className="text-red-500 text-sm mb-2">{error.username}</div>}
           <input
             name="username"
