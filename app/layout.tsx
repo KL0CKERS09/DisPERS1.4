@@ -18,6 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+      <link rel="icon" href="/logoo 1.png" type="image/png" />
+      </head>
       <body
       >
         {children}
