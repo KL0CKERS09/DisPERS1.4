@@ -5,43 +5,33 @@ import bcrypt from "bcryptjs";
 
 export async function POST(req: NextRequest) {
     try {
-        const {
-            firstName,
-            lastName,
-            age,
-            phone,
-            address,
-            email,
-            username,
-            password,
-            role,
-        } = await req.json();
-
-        await connectMongoDB();
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const newUser = await User.create({
-            firstName,
-            lastName,
-            age,
-            phone,
-            address,
-            email,
-            username,
+      const data = await req.json();
+      await connectMongoDB();
+  
+      const users = Array.isArray(data) ? data : [data];
+  
+      const usersToInsert = await Promise.all(
+        users.map(async (user) => {
+          const hashedPassword = await bcrypt.hash(user.password, 10);
+          return {
+            ...user,
             password: hashedPassword,
-            role,
-        });
-
-        return NextResponse.json(
-            { message: "User registered successfully", user: newUser },
-            { status: 201 }
-        );
+          };
+        })
+      );
+  
+      const createdUsers = await User.insertMany(usersToInsert);
+  
+      return NextResponse.json(
+        { message: "Users registered successfully", users: createdUsers },
+        { status: 201 }
+      );
     } catch (error) {
-        console.error("Registration error:", error);
-        return NextResponse.json(
-            { message: "Failed to register user", error },
-            { status: 500 }
-        );
+      console.error("Bulk registration error:", error);
+      return NextResponse.json(
+        { message: "Failed to register users", error },
+        { status: 500 }
+      );
     }
-}
+  }
+  

@@ -13,7 +13,7 @@ export default function AlertModal({ isOpen, onClose, alert }: AlertModalProps) 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-1000 flex items-center justify-center bg-black/50">
+    <div className="fixed inset-0 z-[990] flex items-center justify-center bg-black/50">
       <div className="bg-[#1e1e1e] text-white w-[90%] max-w-md p-5 rounded-xl relative shadow-lg">
         <button
           onClick={onClose}

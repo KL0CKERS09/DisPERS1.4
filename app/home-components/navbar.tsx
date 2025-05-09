@@ -10,7 +10,7 @@ const roboto = Roboto({
 
 export default function Navbar() {
   return (
-    <header className="w-full min-h-16 sticky top-0 bg-[#ffd2aeca] z-[999]">
+    <header className="w-full min-h-16 sticky top-0 bg-[#ffd2aeca] z-[400]">
       <div className="w-full m-auto py-5 px-4 grid place-items-center [grid-template-columns:repeat(auto-fit,minmax(500px,1fr))] gap-[2.5em] scale-[0.75]">
         <div className="flex items-center gap-3">
           <Image 

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import LoadingSpinner from "@/app/loading";
 
 type UserProfile = {
   _id: string;
@@ -111,8 +112,8 @@ export default function Profile() {
   const hasUserChanges = JSON.stringify(user) !== JSON.stringify(originalUser);
   const canSave = editing && hasUserChanges;
   const canChangePassword = currentPassword && newPassword && confirmPassword && newPassword === confirmPassword;
-
-  if (!user) return <p>Loading...</p>;
+  
+    if (!user) return <LoadingSpinner />;
 
   return (
     <div className="max-w-6xl mx-auto min-h-[100vh] p-6 rounded-xl flex flex-col items-start justify-center">
@@ -126,7 +127,7 @@ export default function Profile() {
                 <img
                   src={imagePreview || user.profilePicture || "/defaultProfile.png"}
                   alt=""
-                  className={`w-40 h-40 rounded-full object-cover mb-4 transition-opacity ${editing ? "cursor-pointer hover:opacity-80" : "cursor-default"}`}
+                  className={`w-40 h-40 rounded-full object-cover mb-4 transition-opacity opacity-[0.8] ${editing ? "cursor-pointer opacity-[1] hover:opacity-80" : "cursor-default"}`}
                 />
               </label>
               <input

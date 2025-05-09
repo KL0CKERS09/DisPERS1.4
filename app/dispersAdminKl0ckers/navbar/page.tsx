@@ -30,7 +30,7 @@ export default function NavbarAdmin() {
             <div className={`${styles["backgroundImage"]}`}>
                 <Image className='w-[100%]' src={`/1st-sec-1st-pic.jpg`} alt='' width={1000} height={10}></Image>
             </div>
-            <div className={`${styles.content} w-[80%] m-auto`}>
+            <div className={`${styles.content} w-[90%] m-auto scale-[.8]`}>
                 <div className={`${styles.navbarGrid} w-full m-auto py-5 px-4 flex items-center justify-between`}>
                     <div className="flex items-center gap-4">
                         <Image

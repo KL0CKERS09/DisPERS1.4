@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import ReportDetailModal from './reportmodal/page';
 import UserCard from '../current-user/page';
+import LoadingSpinner from '@/app/loading';
 
 interface Report {
     id: string;
@@ -21,10 +22,12 @@ export default function ReportHistory() {
     const [error, setError] = useState('');
     const [selectedReport, setSelectedReport] = useState<Report | null>(null);
 
+    
+
     useEffect(() => {
         const fetchReports = async () => {
             try {
-                const res = await fetch('/api/submit-report', {
+                const res = await fetch('/api/rep-his-alert', {
                     credentials: 'include',
                 });
 
@@ -44,7 +47,7 @@ export default function ReportHistory() {
         fetchReports();
     }, []);
 
-    if (loading) return <div className="p-4">Loading report history...</div>;
+    if (loading) return <LoadingSpinner />;
     if (error) return <div className="p-4 text-red-500">{error}</div>;
 
     return (

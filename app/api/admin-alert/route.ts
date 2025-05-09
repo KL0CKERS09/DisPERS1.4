@@ -48,12 +48,21 @@ export async function POST(req) {
     }
 }
 
-export async function GET() {
+export async function GET(req) {
     await connectToDB();
-    
+  
+    const { searchParams } = new URL(req.url);
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '20');
+    const skip = (page - 1) * limit;
+  
     const alerts = await Alert.find()
-        .sort({ createdAt: -1 }) // sort newest first
-        .limit(10);              // limit to 10 results
-    
-    return NextResponse.json({ alerts });
-}
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+  
+    const total = await Alert.countDocuments();
+  
+    return NextResponse.json({ alerts, total });
+  }
+  

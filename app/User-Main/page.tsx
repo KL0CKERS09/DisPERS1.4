@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaFileAlt, FaExclamationTriangle, FaBullhorn } from 'react-icons/fa';
 
 import UserCard from "./current-user/page";
@@ -10,6 +10,9 @@ import UserAnnouncement from "./user-home/user-announcement/page";
 
 export default function UserHome() {
   const [activeTab, setActiveTab] = useState<'submit' | 'alerts' | 'announcements'>('submit');
+
+  
+  
 
   return (
     <>

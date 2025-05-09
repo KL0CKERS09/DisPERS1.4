@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import UserGrowthChart from './user-growth/page';
 import AreaGrowthChart from './area-growth/page';
 import CategoryDistribution from './category-growth/page';
+import LoadingSpinner from '../loading';
 
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState<'user' | 'area' | 'category'>('user');
@@ -45,7 +46,8 @@ export default function AdminPage() {
   
     fetchStats();
   }, []);
-  
+    if (loading) return <LoadingSpinner />;
+
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">

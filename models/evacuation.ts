@@ -1,24 +1,29 @@
+import mongoose, { Schema, Connection, Model, Document } from "mongoose";
 
-import { Connection, Schema } from "mongoose";
+interface EvacuationDoc extends Document {
+  name: string;
+  type: string;
+  address: string;
+  capacity: number;
+  status: string;
+  contact: string;
+}
 
-const evacuationSchema = new Schema(
+const EvacuationSchema = new Schema<EvacuationDoc>(
   {
-    adminId: { type: String, required: true },
-    evacuationName: { type: String, required: true },
-    evacuationType: { type: String, required: true },
-    evacuationAddress: { type: String, required: true },
-    evacuationCapacity: { type: Number, required: true },
-    evacuationStatus: { type: String, required: true },
-    evacuationContact: { type: String, required: true },
+    name: { type: String, required: true },
+    type: { type: String, required: true },
+    address: { type: String, required: true },
+    capacity: { type: Number, required: true },
+    status: { type: String, required: true },
+    contact: { type: String, required: true },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    collection: "evacuations",
+  }
 );
 
-export const getEvacuationModel = (conn: Connection) => {
-  return (
-    conn.models?.Evacuation ||
-    conn.model("Evacuation", evacuationSchema, "evacuations")
-  );
-};
-
-export default getEvacuationModel;
+export function getEvacuationModel(conn: Connection): Model<EvacuationDoc> {
+  return conn.models.Evacuation || conn.model<EvacuationDoc>("Evacuation", EvacuationSchema);
+}

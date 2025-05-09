@@ -1,7 +1,6 @@
 import { connectToDB } from '@/libs/mongodb';
 import { ObjectId } from 'mongodb';
 import { NextResponse } from 'next/server';
-import AnonymousReport from "@/models/anonymousRep";
 interface Report {
   image: string;
   _id: ObjectId;
@@ -18,39 +17,38 @@ interface Report {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-
-    const {
-      title,
-      description,
-      type,
-      location,
-      email,
-      image,
-      status,
-    } = body;
-    
-    const report = new AnonymousReport({
-      title,
-      description,
-      type,
-      location,
-      email,
-      status,
-      image,
-    });
-
     await connectToDB();
-    await report.save();
 
-    return NextResponse.json({ message: "Report created successfully" }, { status: 201 });
-  } catch (error) {
-    console.error("Error saving anonymous report:", error);
+    const reports = Array.isArray(body) ? body : [body];
+
+    const formattedReports = reports.map((r) => ({
+      title: r.title,
+      description: r.description,
+      type: r.type,
+      location: r.location,
+      email: r.email,
+      status: r.status || 'Pending',
+      image: r.image || '',
+      verified: false,
+      createdAt: new Date(),
+    }));
+
+    const { db } = await connectToDB();
+    await db.collection('anonymousReport').insertMany(formattedReports);
+
     return NextResponse.json(
-      { message: "Failed to create anonymous report" },
+      { message: `${formattedReports.length} report(s) created successfully` },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error("Bulk insert error:", error);
+    return NextResponse.json(
+      { message: "Failed to process reports" },
       { status: 500 }
     );
   }
 }
+
 
 export async function GET() {
   try {

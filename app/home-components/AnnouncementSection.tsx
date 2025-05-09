@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-// Types
-
 type Announcement = {
     _id: string;
     title: string;
@@ -23,20 +21,10 @@ export default function AdminAnnouncementPage() {
     const fetchAnnouncements = async () => {
         try {
             const res = await axios.get("/api/announcement");
-            const reversedAnnouncements = res.data.announcements?.reverse() || [];
+            const reversedAnnouncements = res.data.announcements || [];
             setAnnouncements(reversedAnnouncements);
         } catch (err) {
             console.error("Fetch error:", err);
-        }
-    };
-
-    const handleDelete = async (id: string) => {
-        if (!confirm("Are you sure you want to delete this announcement?")) return;
-        try {
-            await axios.delete(`/api/announcement/${id}`);
-            fetchAnnouncements(); // Refresh after delete
-        } catch (err) {
-            console.error("Delete error:", err);
         }
     };
 
@@ -85,7 +73,6 @@ export default function AdminAnnouncementPage() {
                 )}
             </div>
 
-            {/* View Details Modal */}
             {viewModalOpen && selectedAnnouncement && (
                 <div className="fixed inset-0 z-1000 bg-black/40 flex items-center justify-center ">
                     <div className="bg-white rounded-2xl shadow-xl max-w-lg w-full p-6 relative">

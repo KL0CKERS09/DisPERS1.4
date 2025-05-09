@@ -1,6 +1,6 @@
 "use client"
 
-import ActiveAlertsSection from "../User-Main/user-home/user-alert/page";
+import ActiveAlertsSection from "../home-components/secondSecClient";
 import About from "../home-components/about";
 import AdminAnnouncementPage from "../home-components/AnnouncementSection";
 import FAQ from "../home-components/FAQS";

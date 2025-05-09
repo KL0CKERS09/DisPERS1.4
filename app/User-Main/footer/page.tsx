@@ -35,7 +35,6 @@ const userFooter = () => {
                     <ul className="space-y-2 text-sm">
                         <li><Link href="/User-Main">Home</Link></li>
                         <li><Link href="/User-Main/user-about">About Us</Link></li>
-                        <li><Link href="/User-Main/contact">Contact</Link></li>
                     </ul>
                 </div>
                 <div>

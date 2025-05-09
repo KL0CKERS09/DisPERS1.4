@@ -5,19 +5,18 @@ import "./globals.css";
 
 
 
-export default function RootLayout({
+export default function LoginLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-      >
-        <Navbar />
+
+      <div>
+      <Navbar />
         {children}
             <Footer  />
-      </body>
-    </html>
+      </div>
+
   );
 }

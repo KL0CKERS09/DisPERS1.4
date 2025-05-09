@@ -2,124 +2,144 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import AlertModal from "./alertModal";
-import style from "@/styles/secondSec.module.scss";
 
-export default function SecondSection() {
-    const [alerts, setAlerts] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [expanded, setExpanded] = useState(false);
-    const [selectedAlert, setSelectedAlert] = useState(null);
+type Alert = {
+  _id: string;
+  title: string;
+  description: string;
+  severity: "HIGH" | "MEDIUM" | "LOW";
+  img: string;
+  createdAt: string;
+  status: "active" | "resolved";
+  location: string;
+};
 
-    useEffect(() => {
-        const fetchAlerts = async () => {
-            try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/alerts`, {
-                    cache: "no-store",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
+export default function AlertsPage() {
+  const [alerts, setAlerts] = useState<Alert[]>([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [selectedAlert, setSelectedAlert] = useState<Alert | null>(null);
 
-                if (!res.ok) throw new Error("Failed to fetch alerts.");
-                const data = await res.json();
-                setAlerts(data.alerts);
-            } catch (error) {
-                console.log("FETCH ERROR:", error);
-                setAlerts([]);
-            } finally {
-                setLoading(false);
-            }
-        };
+  useEffect(() => {
+    fetch(`/api/admin-alert?page=${page}&limit=20`)
+      .then((res) => res.json())
+      .then((data) => {
+        setAlerts(data.alerts);
+        setTotal(data.total);
+      })
+      .catch(console.error);
+  }, [page]);
 
-        fetchAlerts();
-    }, []);
+  const openViewModal = (alert: Alert) => {
+    setSelectedAlert(alert);
+  };
 
-    if (loading) {
-        return (
-            <section className="second-container w-full flex justify-center items-center h-64">
-                <p className="text-gray-500">Loading alerts...</p>
-            </section>
-        );
-    }
+  const closeModal = () => {
+    setSelectedAlert(null);
+  };
 
-    return (
-        <section className="second-container w-full flex justify-center">
-            <div className="alert-container w-[80%] flex flex-col">
-                <div className="alert-title h-[5em] w-full flex justify-center items-center text-red-600">
-                    <h1 className="text-3xl font-semibold">ALERTS</h1>
+  return (
+    <section className="w-full flex flex-col items-center p-8 space-y-6">
+      <div className="flex justify-between items-center w-full max-w-6xl">
+        <h1 className="text-2xl font-bold">Alerts</h1>
+      </div>
+
+      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {alerts.length > 0 ? (
+          alerts.map((alert) => (
+            <li
+              key={alert._id}
+              className="bg-white rounded-xl overflow-hidden shadow-md cursor-pointer hover:scale-105 transition-transform"
+              onClick={() => openViewModal(alert)}
+            >
+              <div className="relative h-48 w-full">
+                <Image src={alert.img} alt={alert.title} layout="fill" objectFit="cover" />
+              </div>
+              <div className="p-4">
+                <h2 className="font-bold text-lg mb-1">{alert.title}</h2>
+                <p className="text-sm text-gray-600 mb-2">{alert.description}</p>
+                <div className="flex justify-between text-xs text-gray-500">
+                  <span>{new Date(alert.createdAt).toLocaleDateString()}</span>
+                  <span className={`px-2 py-1 rounded ${alert.status === 'active' ? 'bg-red-200 text-red-800' : 'bg-green-200 text-green-800'}`}>
+                    {alert.status}
+                  </span>
                 </div>
+              </div>
+            </li>
+          ))
+        ) : (
+          <p>No alerts found.</p>
+        )}
+      </ul>
 
-                <div className="w-full">
-                    <ul className={`${style.shadowInner} alert-grid-container w-full  
-                        ${expanded ? `h-fit overflow-visible ${style.hideBefore}` : "max-h-[500px] overflow-hidden"} 
-                        ${style.resizingGrid} gap-5 transition-all duration-300 ease-in-out`}>
-                        {alerts.length > 0 ? (
-                            alerts.map((t) => (
-                                <li
-                                    className={`${style[`li-indiv`]} max-w-[300px] bg-[#5C5A59]/60 flex flex-col items-center justify-start rounded-3xl overflow-hidden hover:scale-[1.05] transition-[500ms]`}
-                                    key={t._id}
-                                >
-                                    <div className="report-image-holder w-full bg-blue-400 min-h-[15em] max-h-[15em] overflow-hidden">
-                                        <Image
-                                            src={t.img}
-                                            alt={t.title}
-                                            width={300}
-                                            height={200}
-                                            className="object-cover h-full w-full"
-                                        />
-                                    </div>
-                                    <div className="w-[80%] py-5">
-                                        <div className="report-title-holder min-h-[3em] flex items-center">
-                                            <h1 className="text-white text-xl font-bold">{t.title}</h1>
-                                        </div>
-                                        <div className="report-descrip-holder min-h-[2em] max-h-[2em] overflow-hidden">
-                                            <Link className="text-white text-xs" href="/">
-                                                {t.description}
-                                            </Link>
-                                        </div>
-                                        <div className="min-h-[3em] flex justify-between items-center">
-                                            <label className="text-xs text-[#E0E0E0]">
-                                                {new Date(t.createdAt).toLocaleDateString()}
-                                            </label>
-                                            <button
-                                                onClick={() => setSelectedAlert(t)}
-                                                className="w-[6em] h-[2.25em] bg-white text-[#333] text-[.9rem] rounded-xl hover:underline hover:cursor-pointer"
-                                            >
-                                                Details
-                                            </button>
-                                        </div>
-                                    </div>
-                                </li>
-                            ))
-                        ) : (
-                            <p>No alerts found.</p>
-                        )}
-                    </ul>
-                </div>
+      <div className="flex justify-center gap-4 mt-4">
+        <button
+          onClick={() => setPage((p) => Math.max(1, p - 1))}
+          disabled={page === 1}
+          className="bg-gray-300 px-4 py-2 rounded disabled:opacity-50"
+        >
+          Previous
+        </button>
+        <span className="self-center">Page {page}</span>
+        <button
+          onClick={() => setPage((p) => (p * 20 < total ? p + 1 : p))}
+          disabled={page * 20 >= total}
+          className="bg-gray-300 px-4 py-2 rounded disabled:opacity-50"
+        >
+          Next
+        </button>
+      </div>
 
-                <div className="alert-show-more">
-                    <div className="show-more-btn-holder w-full flex justify-center">
-                        <button
-                            onClick={() => setExpanded(!expanded)}
-                            className={`transition-transform cursor-pointer duration-300 flex flex-col items-center ${style["button"]}`}
-                        >
-                            <Image
-                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAABBElEQVR4nO2WOw7CQAwFcwkQnNaFny8GVRA0UHAcKKBCipLd9U/CU8fSjtZJZpqKoiiKQhFmPgG4EtF+SgYR7Zn5BuC8+jCAC4AXMz8yydBH4vE927w6ICI7APfvwBPA0eWkDWciokPXYKSM9EpkkpFRiQwyoiURKSPaEhEyYiXhKSPWEh4ybhKWMu4SFjJhEpoyphLcEI0//dPUZj2zZBmNAwcamZlNVqZlpmedxDMat8y4SljJhEhoy4RKaL7MHh8Dl5sJvQlNmTQSo2sWuk5LVDQuUNGYZc3Cb8Lipxku4RWNrlhFYwja0RiKVjSmYDQaU9EbjSlpjcbUbI3GoiiK/+INpVdbjree1BIAAAAASUVORK5CYII="
-                                alt="Show more"
-                                width={30}
-                                height={30}
-                                className={`hover:scale-[1.1] transition-transform duration-300 ${style["expandBtn"]} ${expanded ? "rotate-180" : "rotate-0"}`}
-                            />
-                            <span className={`${style["span"]} text-gray-600 hover:font-bold cursor-pointer`}>
-                                See More
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <AlertModal isOpen={!!selectedAlert} alert={selectedAlert} onClose={() => setSelectedAlert(null)} />
-        </section>
-    );
+      {selectedAlert && (
+        <div className="fixed inset-0 z-[990] flex items-center justify-center bg-black/50">
+        <div className="bg-[#1e1e1e] text-white w-[90%] max-w-md p-5 rounded-xl relative shadow-lg">
+          <button
+            onClick={closeModal}
+            className="absolute top-3 right-3 text-white text-xl hover:text-red-500"
+          >
+            &times;
+          </button>
+  
+          <div className="text-red-500 font-semibold text-sm mb-2"> ALERT</div>
+          <h2 className="text-2xl font-bold mb-4">{selectedAlert.title || 'Flash Flood Warning'}</h2>
+  
+          <div className="w-full h-40 bg-gray-300 mb-4 rounded">
+            <Image
+              src={selectedAlert.img || 'https://via.placeholder.com/400x200'}
+              alt={selectedAlert.title}
+              width={400}
+              height={200}
+              className="w-full h-full object-cover rounded"
+            />
+          </div>
+  
+          <div className="mb-2">
+            <strong className="text-red-400">Severity Level</strong>
+            <p className="text-sm text-gray-300">{selectedAlert.severity}</p>
+          </div>
+          <div className="mb-2">
+            <strong className="text-yellow-400">Location</strong>
+            <p className="text-sm text-gray-300">{selectedAlert.location || 'Main Street and surrounding areas'}</p>
+          </div>
+          <div className="mb-2">
+            <strong className="text-blue-400">Current Status</strong>
+            <p className="text-sm text-gray-300">{selectedAlert.status}</p>
+          </div>
+  
+          <div className="bg-[#2b2b2b] p-3 rounded-md mt-4 text-sm">
+            <strong className="block mb-2 text-white">Description</strong>
+            <ul className="list-disc list-inside text-gray-300 space-y-1">
+              <li>{selectedAlert.description}</li>
+            </ul>
+          </div>
+  
+          <div className="text-xs text-gray-500 mt-4 flex justify-between">
+            <span>{new Date(selectedAlert.createdAt).toLocaleString()}</span>
+            <a href={`tel:911`} className="text-blue-400 hover:underline">Emergency Contact: 911</a>
+          </div>
+        </div>
+      </div>
+      )}
+    </section>
+  );
 }

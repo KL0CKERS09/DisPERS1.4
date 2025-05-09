@@ -1,5 +1,4 @@
 
-
 import React from 'react';
 import NavbarUser from './navbar-component/page';
 import './globals.css';
@@ -11,7 +10,6 @@ export default function UserMainLayout({ children }: { children: React.ReactNode
   return (
     <html lang="en">
           <body
-            className={`antialiased bg-[#F5F5F5]`}
           >
             <NavbarUser />
             {children} 

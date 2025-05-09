@@ -2,9 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import style from "./alert.module.scss";
-import UserAlertModal from "./userAlertModal";
 
 type Alert = {
   _id: string;
@@ -13,134 +10,100 @@ type Alert = {
   severity: "HIGH" | "MEDIUM" | "LOW";
   img: string;
   createdAt: string;
+  status: "active" | "resolved";
+  location: string;
 };
 
-export default function ActiveAlertsSection() {
+export default function AlertsPage() {
   const [alerts, setAlerts] = useState<Alert[]>([]);
-  const [expanded, setExpanded] = useState(false);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
   const [selectedAlert, setSelectedAlert] = useState<Alert | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  const fetchAlerts = async () => {
-    try {
-      const res = await fetch("/api/alerts", {
-        cache: "no-store",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-  
-      if (!res.ok) throw new Error("Failed to fetch alerts.");
-      
-      const data = await res.json();
-  
-      setAlerts((data.alerts || []).reverse());
-      
-    } catch (error) {
-      console.error("FETCH ERROR:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  
 
   useEffect(() => {
-    fetchAlerts();
-  }, []);
+    fetch(`/api/admin-alert?page=${page}&limit=20`)
+      .then((res) => res.json())
+      .then((data) => {
+        setAlerts(data.alerts);
+        setTotal(data.total);
+      })
+      .catch(console.error);
+  }, [page]);
 
-  if (loading) {
-    return <div className="text-center py-10">Loading alerts...</div>;
-  }
+  const openViewModal = (alert: Alert) => {
+    setSelectedAlert(alert);
+  };
+
+  const closeModal = () => {
+    setSelectedAlert(null);
+  };
 
   return (
-    <div className="w-[90%] min-h-screen mx-auto flex">
-      <section className="second-container w-full flex justify-center">
-        <div className="alert-container w-full flex flex-col pl-[3em]">
-          <div className="title-holder border-b border-gray-300 mb-5">
-            <h1 className="text-3xl py-10 font-bold text-gray-800">Alerts</h1>
-          </div>
+    <section className="w-full flex flex-col items-center p-8 space-y-6">
+      <div className="flex justify-between items-center w-full max-w-6xl">
+        <h1 className="text-2xl font-bold">Alerts</h1>
+      </div>
 
-          <div className="w-full">
-            <ul
-              className={`${style.shadowInner} alert-grid-container w-full  
-                  ${expanded ? `h-fit overflow-visible ${style.hideBefore}` : "max-h-[500px] overflow-hidden"} 
-                  ${style.resizingGrid} gap-5 transition-all duration-300 ease-in-out`}
+      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {alerts.length > 0 ? (
+          alerts.map((alert) => (
+            <li
+              key={alert._id}
+              className="bg-white rounded-xl overflow-hidden shadow-md cursor-pointer hover:scale-105 transition-transform"
+              onClick={() => openViewModal(alert)}
             >
-              {alerts.length > 0 ? (
-                alerts.map((t) => (
-                  <li
-                    key={t._id}
-                    className={`${style["li-indiv"]} max-w-[300px] bg-white grid grid-rows-2 rounded-2xl overflow-hidden hover:scale-[1.05] transition-[500ms]`}
-                  >
-                    <div className="report-image-holder w-full bg-blue-400 min-h-full max-h-full overflow-hidden">
-                      <Image
-                        src={t.img}
-                        alt={t.title}
-                        width={300}
-                        height={200}
-                        className="object-cover h-full w-full"
-                      />
-                    </div>
-                    <div className="w-full py-1 grid grid-rows-3">
-                      <div className="w-full px-4 py-3 flex items-center">
-                        <h1 className="text-black text-xl font-bold">{t.title}</h1>
-                      </div>
-                      <div className="w-full px-4 py-3 max-h-[2em] overflow-hidden">
-                        <Link href="/" className="text-[#000]/50 text-xs">
-                          {t.description}
-                        </Link>
-                      </div>
-                      <div className="w-full px-4 py-3 flex justify-between items-center">
-                        <label className="text-xs text-[#c0c0c0]">
-                          {new Date(t.createdAt).toLocaleDateString()}
-                        </label>
-                        <button
-                          onClick={() => setSelectedAlert(t)}
-                          className="w-[6em] h-[2.25em] bg-white text-[#2563EB] text-[.9rem] rounded-xl underline hover:cursor-pointer"
-                        >
-                          View Details
-                        </button>
-                      </div>
-                    </div>
-                  </li>
-                ))
-              ) : (
-                <p>No alerts found.</p>
-              )}
-            </ul>
-          </div>
-
-          {/* See More Button */}
-          {alerts.length > 0 && (
-            <div className="alert-show-more">
-              <div className="show-more-btn-holder w-full flex justify-center">
-                <button
-                  onClick={() => setExpanded(!expanded)}
-                  className={`transition-transform cursor-pointer duration-300 flex flex-col items-center ${style.button}`}
-                >
-                  <Image
-                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAABBElEQVR4nO2WOw7CQAwFcwkQnNaFny8GVRA0UHAcKKBCipLd9U/CU8fSjtZJZpqKoiiKQhFmPgG4EtF+SgYR7Zn5BuC8+jCAC4AXMz8yydBH4vE927w6ICI7APfvwBPA0eWkDWciokPXYKSM9EpkkpFRiQwyoiURKSPaEhEyYiXhKSPWEh4ybhKWMu4SFjJhEpoyphLcEI0//dPUZj2zZBmNAwcamZlNVqZlpmedxDMat8y4SljJhEhoy4RKaL7MHh8Dl5sJvQlNmTQSo2sWuk5LVDQuUNGYZc3Cb8Lipxku4RWNrlhFYwja0RiKVjSmYDQaU9EbjSlpjcbUbI3GoiiK/+INpVdbjree1BIAAAAASUVORK5CYII="
-                    alt="Show more"
-                    width={30}
-                    height={30}
-                    className={`hover:scale-[1.1] transition-transform duration-300 ${style.expandBtn} ${expanded ? "rotate-180" : "rotate-0"}`}
-                  />
-                  <span className={`${style.span} text-gray-600 hover:font-bold cursor-pointer`}>
-                    {expanded ? "See Less" : "See More"}
-                  </span>
-                </button>
+              <div className="relative h-48 w-full">
+                <Image src={alert.img} alt={alert.title} layout="fill" objectFit="cover" />
               </div>
-            </div>
-          )}
-        </div>
+              <div className="p-4">
+                <h2 className="font-bold text-lg mb-1">{alert.title}</h2>
+                <p className="text-sm text-gray-600 mb-2">{alert.description}</p>
+                <div className="flex justify-between text-xs text-gray-500">
+                  <span>{new Date(alert.createdAt).toLocaleDateString()}</span>
+                  <span className={`px-2 py-1 rounded ${alert.status === 'active' ? 'bg-red-200 text-red-800' : 'bg-green-200 text-green-800'}`}>
+                    {alert.status}
+                  </span>
+                </div>
+              </div>
+            </li>
+          ))
+        ) : (
+          <p>No alerts found.</p>
+        )}
+      </ul>
 
-        {/* Alert Modal */}
-        <UserAlertModal
-          isOpen={!!selectedAlert}
-          alert={selectedAlert}
-          onClose={() => setSelectedAlert(null)}
-        />
-      </section>
-    </div>
+      <div className="flex justify-center gap-4 mt-4">
+        <button
+          onClick={() => setPage((p) => Math.max(1, p - 1))}
+          disabled={page === 1}
+          className="bg-gray-300 px-4 py-2 rounded disabled:opacity-50"
+        >
+          Previous
+        </button>
+        <span className="self-center">Page {page}</span>
+        <button
+          onClick={() => setPage((p) => (p * 20 < total ? p + 1 : p))}
+          disabled={page * 20 >= total}
+          className="bg-gray-300 px-4 py-2 rounded disabled:opacity-50"
+        >
+          Next
+        </button>
+      </div>
+
+      {selectedAlert && (
+        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl w-full max-w-lg p-6">
+            <button className="ml-auto text-gray-500" onClick={closeModal}>✕</button>
+            <h2 className="text-xl font-bold mb-2">{selectedAlert.title}</h2>
+            <Image src={selectedAlert.img} alt={selectedAlert.title} width={400} height={200} className="rounded" />
+            <p><strong>Description:</strong> {selectedAlert.description}</p>
+            <p><strong>Location:</strong> {selectedAlert.location}</p>
+            <p><strong>Severity:</strong> {selectedAlert.severity}</p>
+            <p><strong>Status:</strong> {selectedAlert.status}</p>
+            <p><strong>Date:</strong> {new Date(selectedAlert.createdAt).toLocaleString()}</p>
+          </div>
+        </div>
+      )}
+    </section>
   );
 }

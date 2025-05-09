@@ -55,7 +55,7 @@ export default function LogIn() {
     <>
       <section className={`${style.body}`}>
         <div className="min-h-screen flex items-center justify-center bg-[url('/images/bg-pattern.jpg')] bg-cover">
-          <div className="bg-white bg-opacity-90 rounded-3xl shadow-xl p-10 w-full max-w-sm text-center scale-[.9]">
+          <div className="bg-white bg-opacity-90 rounded-3xl shadow-xl p-10 w-full max-w-sm text-center scale-[1.1]">
             <h2 className="text-2xl font-bold mb-6 tracking-wider">LOG IN</h2>
 
             <form className="space-y-5" onSubmit={handleLogin}>

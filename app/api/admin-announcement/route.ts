@@ -38,16 +38,30 @@ export async function POST(req: NextRequest) {
         );
     }
 }
-export async function GET() {
+export async function GET(request: Request) {
     try {
         const conn = await connectAnnDB();
         const Ann = getAnnouncementModel(conn);
 
-        const announcements = await Ann.find()
-            .sort({ createdAt: -1 }) // newest first
-            .limit(5);               // only get top 5
+        const url = new URL(request.url);
+        const page = parseInt(url.searchParams.get('page') || '1', 10); // Default to page 1
+        const limit = parseInt(url.searchParams.get('limit') || '10', 10); // Default to 10 items per page
+        const skip = (page - 1) * limit;
 
-        return NextResponse.json({ announcements });
+        const announcements = await Ann.find()
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit);
+
+        const totalCount = await Ann.countDocuments(); // Get the total number of announcements
+        const totalPages = Math.ceil(totalCount / limit);
+
+        return NextResponse.json({
+            announcements,
+            totalPages,
+            currentPage: page,
+            totalCount,
+        });
     } catch (error) {
         console.error("❌ GET /announcement error:", error);
         return NextResponse.json(

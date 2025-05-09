@@ -13,7 +13,6 @@ export default function LogInLayout({
   return (
     <html lang="en">
       <body
-        className={` antialiased bg-[#F5F5F5]`}
       >
         <Navbar />
         {children}
