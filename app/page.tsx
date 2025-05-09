@@ -6,6 +6,12 @@ import Navbar from "./home-components/navbar";
 import { useState, useEffect } from "react";
 import LoadingSpinner from "./loading";
 
+export const metadata = {
+  title: "DisPERS | Disaster Reporting System",
+  description: "Official web app of DisPERS — enabling fast disaster alert reporting in Bagong Silangan.",
+  keywords: "DisPERS, disaster reporting, Bagong Silangan, emergency system",
+};
+
 export default function Home() {
   const [alerts, setAlerts] = useState([]);
   const [loading, setLoading] = useState(true);
