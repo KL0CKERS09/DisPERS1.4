@@ -8,16 +8,15 @@ import AnnouncementNotifier from '@/app/home-components/AlertNotificationWatcher
 
 export default function UserMainLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-          <body
-          >
+    <>
             <NavbarUser />
             {children} 
             <hr />
             <AnnouncementNotifier />
             <About/>
             <Footer/>
-          </body>
-    </html>
+    </>
+    
+
   );
 }

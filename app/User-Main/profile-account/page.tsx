@@ -57,7 +57,17 @@ export default function Profile() {
     if (user && validateForm()) {
       setSubmitting(true);
       try {
-        await axios.put("/api/profile", user);
+        await axios.put("/api/profile", {
+          firstName: user.firstName,
+          middleName: user.middleName,
+          lastName: user.lastName,
+          suffix: user.suffix,
+          age: user.age,
+          phone: user.phone,
+          email: user.email,
+          username: user.username,
+        });
+
 
         if (imagePreview && imagePreview !== originalUser?.profilePicture) {
           await axios.post("/api/profile/picture", {
@@ -112,8 +122,8 @@ export default function Profile() {
   const hasUserChanges = JSON.stringify(user) !== JSON.stringify(originalUser);
   const canSave = editing && hasUserChanges;
   const canChangePassword = currentPassword && newPassword && confirmPassword && newPassword === confirmPassword;
-  
-    if (!user) return <LoadingSpinner />;
+
+  if (!user) return <LoadingSpinner />;
 
   return (
     <div className="max-w-6xl mx-auto min-h-[100vh] p-6 rounded-xl flex flex-col items-start justify-center">

@@ -39,9 +39,9 @@ export async function PUT(req: Request) {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { userId: string };
     const { db } = await connectToDB();
-    const { firstName, lastName, age, phone, email, username } = await req.json();
+    const { firstName, middleName, lastName, suffix, age, phone, email, username } = await req.json();
+    const updateFields = { firstName, middleName, lastName, suffix, age, phone, email, username };
 
-    const updateFields = { firstName, lastName, age, phone, email, username };
 
     await db.collection('users').updateOne(
       { _id: new ObjectId(decoded.userId) },

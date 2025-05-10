@@ -8,9 +8,9 @@ interface ReportDetailModalProps {
   report: {
     title: string;
     description: string;
-    type: string;
+    category: string;
     location: string;
-    date: string;
+    createdAt: string;
     status: string;
     image?: string;
   };
@@ -44,9 +44,9 @@ export default function ReportDetailModal({ isOpen, onClose, report }: ReportDet
           )}
           <DetailRow label="Title" value={report.title} />
           <DetailRow label="Title" value={report.description} />
-          <DetailRow label="Type" value={report.type} />
+          <DetailRow label="Type" value={report.category} />
           <DetailRow label="Location" value={report.location} />
-          <DetailRow label="Date" value={new Date(report.date).toLocaleString()} />
+          <DetailRow label="Date" value={new Date(report.createdAt).toLocaleString()} />
           <DetailRow
             label="Status"
             value={report.status}

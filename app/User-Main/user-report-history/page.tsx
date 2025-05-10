@@ -9,9 +9,9 @@ interface Report {
     id: string;
     title: string;
     description: string;
-    type: string;
+    category: string;
     location: string;
-    date: string;
+    createdAt: string;
     status: string;
     image?: string;
 }
@@ -85,9 +85,9 @@ export default function ReportHistory() {
                                             <td className="w-[6em] px-2 py-1 border-r border-gray-200 overflow-hidden truncate" title={report.title}>
                                                 {report.title}
                                             </td>
-                                            <td className="w-[3em] px-2 py-1 border-r border-gray-200 overflow-hidden truncate" title={report.type}>
+                                            <td className="w-[3em] px-2 py-1 border-r border-gray-200 overflow-hidden truncate" title={report.category}>
                                                 <div className='max-w-[10em] overflow-hidden'>
-                                                    {report.type}
+                                                    {report.category}
                                                 </div>
                                             </td>
                                             <td className="w-[5em] px-2 py-1 border-r border-gray-200 overflow-hidden truncate" title={report.location}>
@@ -95,8 +95,8 @@ export default function ReportHistory() {
                                                     {report.location}
                                                 </div>
                                             </td>
-                                            <td className="w-[6em] px-2 py-1 border-r border-gray-200 overflow-hidden truncate" title={new Date(report.date).toLocaleString()}>
-                                                {new Date(report.date).toLocaleString()}
+                                            <td className="w-[6em] px-2 py-1 border-r border-gray-200 overflow-hidden truncate" title={new Date(report.createdAt).toLocaleString()}>
+                                                {new Date(report.createdAt).toLocaleString()}
                                             </td>
                                             <td className="w-[4em] px-2 py-1 border-r border-gray-200 overflow-hidden truncate">
                                                 <span className={`font-bold ${report.status === 'Active' ? 'text-red-500' : 'text-green-500'}`}>

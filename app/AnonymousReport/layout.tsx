@@ -11,13 +11,12 @@ export default function LogInLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-      >
-        <Navbar />
+
+    <>
+    <Navbar />
         {children}
         <Footer  />
-      </body>
-    </html>
+    </>
+ 
   );
 }

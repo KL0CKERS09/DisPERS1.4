@@ -8,7 +8,6 @@ export default function AnnouncementNotifier() {
   const lastAlertId = useRef<string | null>(null);
 
   useEffect(() => {
-    // Ask for notification permission
     if ("Notification" in window && Notification.permission !== "granted") {
       Notification.requestPermission();
     }

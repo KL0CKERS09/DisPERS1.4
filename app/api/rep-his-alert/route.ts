@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { connectToDB } from '@/libs/mongodb';
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
-import { ObjectId } from 'mongodb';
 
 export async function GET() {
   try {
@@ -22,10 +21,10 @@ export async function GET() {
     const decoded = jwt.verify(token, secret) as { userId: string };
     const userId = decoded.userId;
 
-    const db = await connectToDB();
+    const { db } = await connectToDB();
     const reports = await db
       .collection('reports')
-      .find({ userId: new ObjectId(userId) })
+      .find({ userId }) // userId is a string here, matching how it's stored
       .toArray();
 
     return NextResponse.json({ reports }, { status: 200 });
